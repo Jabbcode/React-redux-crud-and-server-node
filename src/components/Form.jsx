@@ -1,9 +1,26 @@
 import { useEffect, useState } from 'react'
-import { EditUser, UserCreated } from '../services/users'
 
-export const Form = ({ stateForm, form, setForm, id }) => {
+import { useDispatch, useSelector } from 'react-redux'
+import { EditUserRedux, UserCreatedRedux } from '../redux/features/user/thunks'
+
+export const Form = () => {
+	const dispatch = useDispatch()
+	const { user, stateForm } = useSelector((state) => state.user)
+
 	const [onDisabled, setOndisabled] = useState(true)
+	const [form, setForm] = useState({
+		name: '',
+		lastname: '',
+		age: '',
+		address: '',
+	})
 
+	// Cuando se cargan datos de la tabla al formulario, para renderizar el formulario y se actualice la data
+	useEffect(() => {
+		setForm(user)
+	}, [user])
+
+	// Cuando el formulario no tiene todos lo campos llenos, el boton esta deshabilitado
 	useEffect(() => {
 		if (form.name !== '' && form.lastname !== '' && form.age !== '' && form.address !== '') {
 			setOndisabled(false)
@@ -12,48 +29,19 @@ export const Form = ({ stateForm, form, setForm, id }) => {
 		}
 	}, [form])
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = (e) => {
 		e.preventDefault()
 
 		if (stateForm === true) {
-			try {
-				const {
-					data: { msg },
-				} = await EditUser(form, id)
-
-				Swal.fire({
-					position: 'center',
-					icon: 'success',
-					title: msg,
-					showConfirmButton: false,
-					timer: 1500,
-				})
-			} catch (error) {
-				console.log(error)
-			}
+			dispatch(EditUserRedux(form, user.id))
 		} else {
-			try {
-				const {
-					data: { user, msg },
-				} = await UserCreated(form)
-
-				Swal.fire({
-					position: 'center',
-					icon: 'success',
-					title: msg,
-					showConfirmButton: false,
-					timer: 1500,
-				})
-
-				setForm({
-					name: '',
-					lastname: '',
-					age: '',
-					address: '',
-				})
-			} catch (error) {
-				console.log(error)
-			}
+			dispatch(UserCreatedRedux(form))
+			setForm({
+				name: '',
+				lastname: '',
+				age: '',
+				address: '',
+			})
 		}
 	}
 

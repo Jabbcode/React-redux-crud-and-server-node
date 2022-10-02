@@ -1,18 +1,6 @@
-import { useState } from 'react'
 import { ControlStatusForm, Form, Table } from './components'
 
 function App() {
-	const [stateForm, setStateForm] = useState(false)
-	const [users, setUsers] = useState([])
-	const [id, setId] = useState('')
-
-	const [form, setForm] = useState({
-		name: '',
-		lastname: '',
-		age: '',
-		address: '',
-	})
-
 	return (
 		<div className="container">
 			<div className="mt-4">
@@ -22,15 +10,15 @@ function App() {
 					<div className="col-4">
 						<div className="card">
 							<div className="card-header">
-								<ControlStatusForm stateForm={stateForm} setStateForm={setStateForm} />
+								<ControlStatusForm />
 							</div>
 							<div className="card-body">
-								<Form stateForm={stateForm} form={form} setForm={setForm} id={id} />
+								<Form />
 							</div>
 						</div>
 					</div>
 					<div className="col-8">
-						<Table users={users} setUsers={setUsers} stateForm={stateForm} setForm={setForm} setId={setId} />
+						<Table />
 					</div>
 				</div>
 			</div>

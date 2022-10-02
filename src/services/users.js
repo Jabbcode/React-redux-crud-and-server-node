@@ -1,21 +1,23 @@
 import axios from 'axios'
 
-export const GetAllUsers = () => {
-	return axios.get('http://localhost:3000/api/users')
+const BASE_URL = 'http://localhost:3000/api'
+
+export const GetAllUsersService = () => {
+	return axios.get(`${BASE_URL}/users`)
 }
 
-export const GetUser = (id) => {
-	return axios.get(`http://localhost:3000/api/users/${id}`)
+export const GetUserService = (id) => {
+	return axios.get(`${BASE_URL}/users/${id}`)
 }
 
-export const UserCreated = (data) => {
-	return axios.post('http://localhost:3000/api/users/user', data)
+export const UserCreatedService = (data) => {
+	return axios.post(`${BASE_URL}/users/user`, data)
 }
 
-export const EditUser = (data, id) => {
-	return axios.put(`http://localhost:3000/api/users/user/${id}`, data)
+export const EditUserService = (data, id) => {
+	return axios.put(`${BASE_URL}/users/user/${id}`, data)
 }
 
-export const DeleteUser = (id) => {
-	return axios.delete(`http://localhost:3000/api/users/user-delete/${id}`)
+export const DeleteUserService = (id) => {
+	return axios.delete(`${BASE_URL}/users/user-delete/${id}`)
 }
